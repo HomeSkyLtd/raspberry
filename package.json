@@ -1,0 +1,39 @@
+{
+  "name": "rainfall-raspberry",
+  "version": "1.0.0",
+  "description": "Sensor/Actuator implementation using a raspberry pi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HomeSkyLtd/raspberry.git"
+  },
+  "keywords": [
+    "rainfall",
+    "raspberry",
+    "sensor",
+    "actuator",
+    "home",
+    "automation",
+    "protocol",
+    "example"
+  ],
+   "contributors": [
+  { "name": "Ricardo Boccoli Gallego", "email": "ricardo.gallego93@gmail.com" },
+  { "name": "Henrique Rodrigues", "email": "henriqrodrigues@gmail.com" },
+  { "name": "Fabio Tsuyoshi Muramatsu", "email": "ftmtsuyoshi@gmail.com" }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HomeSkyLtd/raspberry/issues"
+  },
+  "dependencies": {
+    "rainfall-udp": "*",
+    "rainfall-tcp": "*",
+    "rainfall-xbee-s1": "*",
+    "rainfall-leaf": "*"
+   },
+  "homepage": "https://github.com/HomeSkyLtd/raspberry#readme"
+}
