@@ -1,0 +1,24 @@
+{
+    "commandType": [
+        {
+            "id": 1,
+            "type": "bool",
+            "range": [0, 1],
+            "unit": "",
+            "commandCategory": "lightswitch",
+            "output": {
+                "gpio": 10,
+                "invert": 0,
+                "initial": 0
+            }
+        }
+    ],
+    "networkInterface": {
+        "type": "tcp",
+        "params": {
+            "rport": 2357,
+            "broadcast_port": 2356
+        }
+    }
+
+}

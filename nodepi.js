@@ -11,6 +11,8 @@ const DRIVERS = {
 
 const Leaf = require('rainfall-leaf');
 
+const gpio = require('rpi-gpio');
+
 const DEFAULT_CONFIG_FILE = '~/.rainfall-node.json';
 
 /*The CONFIG file should be a JSON file in the format:
@@ -39,7 +41,7 @@ const DEFAULT_CONFIG_FILE = '~/.rainfall-node.json';
             "unit": "<UNIT_STRING>",
             "commandCategory": "toggle" | temperature" | "fan" | "lightswitch"
                 | "acmode" | "lightintensity" | "lightcolor",
-            "input": {
+            "output": {
                 "gpio": <GPIO_NUMBER>,
                 "invert": 0 | 1,
                 "initial": 0 | 1
@@ -79,6 +81,10 @@ fs.readFile(filename, 'utf8', (err, data) => {
         }
         return ret;
     };
+    var reduceToObjFunction = (previous, current) => {
+        previous[current.id] = current;
+        return previous;
+    };
     DRIVERS[config.networkInterface.type].createDriver(config.networkInterface.params, 
         (err, driver) => {
             if (err) throw err;
@@ -92,8 +98,10 @@ fs.readFile(filename, 'utf8', (err, data) => {
                     throw err;
                 }
                 onStart(leaf, { 
-                    dataType: config.dataType,
-                    commandType: config.commandType
+                    dataType: config.dataType && 
+                        config.dataType.reduce(reduceToObjFunction, {}),
+                    commandType: config.commandType &&
+                        config.commandType.reduce(reduceToObjFunction, {})
                 });
             });
     });
@@ -102,12 +110,29 @@ fs.readFile(filename, 'utf8', (err, data) => {
 function onStart(leaf, dataCommand) {
     console.log("STARTED!");
     if (dataCommand.dataType) {
-        
     }
     if (dataCommand.commandType) {
-        
+        //TODO: Maybe do all this in sequence (not parallel)
+        var initialState = [];
+        for (var command of dataCommand.commandType) {
+            if (command.output) {
+                gpio.setup(command.output.gpio, gpio.DIR_OUT);
+                initialState.push({id: command.id, value: command.output.initial });
+            }
+        }
+        leaf.sendExternalCommand(initialState);
+        leaf.listenCommand((obj) => {
+            for (var cmd of obj.command) {
+                if (dataCommand.commandType[cmd.id]) {
+                    gpio.write(dataCommand.commandType[cmd.id].output.gpio, cmd.value == invert,
+                        () => {});
+                }
+            }
+        }, (err) => { if (err) throw err; });
     }
 }
+
+
 /*
 Driver.createDriver({rport: 4567}, function (err, driver) {
 	if (err) {
