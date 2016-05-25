@@ -7,7 +7,7 @@
             "unit": "",
             "commandCategory": "lightswitch",
             "output": {
-                "gpio": 10,
+                "gpio": 14,
                 "invert": 0,
                 "initial": 0
             }

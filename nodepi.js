@@ -5,8 +5,7 @@ const fs = require('fs');
 //Drivers
 const DRIVERS = {
     'tcp': require('rainfall-tcp'),
-    'udp': require('rainfall-udp'),
-    'xbee-s1': require('rainfall-xbee-s1'),
+    'udp': require('rainfall-udp')
 };
 
 const Leaf = require('rainfall-leaf');
@@ -116,7 +115,8 @@ function onStart(leaf, dataCommand) {
     if (dataCommand.commandType) {
         //TODO: Maybe do all this in sequence (not parallel)
         var initialState = [];
-        for (var command of dataCommand.commandType) {
+        for (var i in dataCommand.commandType) {
+       	    var command = dataCommand.commandType[i];
             if (command.output) {
                 wpi.pinMode(command.output.gpio, wpi.OUTPUT);
                 initialState.push({id: command.id, value: command.output.initial });
@@ -124,10 +124,12 @@ function onStart(leaf, dataCommand) {
         }
         leaf.sendExternalCommand(initialState);
         leaf.listenCommand((obj) => {
-            for (var cmd of obj.command) {
+            for (var i in obj.command) {
+		var cmd = obj.command[i];
                 if (dataCommand.commandType[cmd.id]) {
+		    console.log(cmd.value);
                     wpi.digitalWrite(dataCommand.commandType[cmd.id].output.gpio, 
-                        cmd.value == invert);
+                        cmd.value == dataCommand.commandType[cmd.id].output.invert ? 0 : 1);
                 }
             }
         }, (err) => { if (err) throw err; });
