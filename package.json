@@ -34,7 +34,7 @@
     "rainfall-tcp": "*",
     "rainfall-xbee-s1": "*",
     "rainfall-leaf": "*",
-    "rpi-gpio": "*"
+    "wiring-pi": "*"
    },
   "homepage": "https://github.com/HomeSkyLtd/raspberry#readme"
 }

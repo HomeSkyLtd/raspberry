@@ -11,7 +11,7 @@ const DRIVERS = {
 
 const Leaf = require('rainfall-leaf');
 
-const gpio = require('rpi-gpio');
+const wpi = require('wiring-pi');
 
 const DEFAULT_CONFIG_FILE = '~/.rainfall-node.json';
 
@@ -59,6 +59,8 @@ const DEFAULT_CONFIG_FILE = '~/.rainfall-node.json';
 
 }
 */
+
+wpi.setup('gpio');
 
 var filename = process.argv[2] || DEFAULT_CONFIG_FILE;
 
@@ -116,7 +118,7 @@ function onStart(leaf, dataCommand) {
         var initialState = [];
         for (var command of dataCommand.commandType) {
             if (command.output) {
-                gpio.setup(command.output.gpio, gpio.DIR_OUT);
+                wpi.pinMode(command.output.gpio, wpi.OUTPUT);
                 initialState.push({id: command.id, value: command.output.initial });
             }
         }
@@ -124,8 +126,8 @@ function onStart(leaf, dataCommand) {
         leaf.listenCommand((obj) => {
             for (var cmd of obj.command) {
                 if (dataCommand.commandType[cmd.id]) {
-                    gpio.write(dataCommand.commandType[cmd.id].output.gpio, cmd.value == invert,
-                        () => {});
+                    wpi.digitalWrite(dataCommand.commandType[cmd.id].output.gpio, 
+                        cmd.value == invert);
                 }
             }
         }, (err) => { if (err) throw err; });
