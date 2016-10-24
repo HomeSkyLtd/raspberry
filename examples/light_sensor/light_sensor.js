@@ -38,7 +38,9 @@ Driver.createDriver({}, function(err, driver) {
                         throw new Error("Device not found");
                     }
                     var read = function() {
-                        readValue = toNumber(wpi.wiringPiI2CRead(desc));
+                        var dt = wpi.wiringPiI2CRead(desc);
+                        console.log(dt);
+                        readValue = toNumber(dt);
                         leaf.sendData({id: 1, value: readValue}, function (err) {
                             if (err) console.log(err);
                             else console.log("[DATA SENT] Sent value: " + readValue);
