@@ -20,21 +20,31 @@
     "protocol",
     "example"
   ],
-   "contributors": [
-  { "name": "Ricardo Boccoli Gallego", "email": "ricardo.gallego93@gmail.com" },
-  { "name": "Henrique Rodrigues", "email": "henriqrodrigues@gmail.com" },
-  { "name": "Fabio Tsuyoshi Muramatsu", "email": "ftmtsuyoshi@gmail.com" }
+  "contributors": [
+    {
+      "name": "Ricardo Boccoli Gallego",
+      "email": "ricardo.gallego93@gmail.com"
+    },
+    {
+      "name": "Henrique Rodrigues",
+      "email": "henriqrodrigues@gmail.com"
+    },
+    {
+      "name": "Fabio Tsuyoshi Muramatsu",
+      "email": "ftmtsuyoshi@gmail.com"
+    }
   ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/HomeSkyLtd/raspberry/issues"
   },
   "dependencies": {
-    "rainfall-udp": "*",
-    "rainfall-tcp": "*",
-    "rainfall-xbee-s1": "*",
+    "lcdi2c": "^1.0.6",
     "rainfall-leaf": "*",
+    "rainfall-tcp": "*",
+    "rainfall-udp": "*",
+    "rainfall-xbee-s1": "*",
     "wiring-pi": "*"
-   },
+  },
   "homepage": "https://github.com/HomeSkyLtd/raspberry#readme"
 }
