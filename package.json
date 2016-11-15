@@ -39,7 +39,9 @@
     "url": "https://github.com/HomeSkyLtd/raspberry/issues"
   },
   "dependencies": {
+    "lcd": "^1.1.4",
     "lcdi2c": "^1.0.6",
+    "node-dht-sensor": "0.0.32",
     "rainfall-leaf": "*",
     "rainfall-tcp": "*",
     "rainfall-udp": "*",
